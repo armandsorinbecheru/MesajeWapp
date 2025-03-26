@@ -28,9 +28,9 @@ def index():
         print(f"[DEBUG] Formatted number: {phone_number}")
 
         message = (
-            f"*Curățătoria Xxxxxxx Xxxx*\n\n"
-            f"Bună ziua! Comanda dvs. #{order_number} este gata de ridicare.\n"
-            f"Program: Luni - Sâmbătă, 08:00 - 18:00"
+            f"*Curățătoria Octavia Ecol Mangalia*\n\n"
+            f"✅Bună ziua! Comanda cu numărul #{order_number} este gata de ridicare. Vă mulțumim!\n\n"
+            f"🕑Program: Luni - Sâmbătă, 08:00 - 18:00"
         )
 
         now = datetime.datetime.now()
@@ -39,7 +39,7 @@ def index():
         minute = target_time.minute
 
         try:
-            kit.sendwhatmsg(phone_number, message, hour, minute, wait_time=20, tab_close=True)
+            kit.sendwhatmsg(phone_number, message, hour, minute, wait_time=10, tab_close=True)
             flash("Mesaj WhatsApp trimis cu succes!", "success")
         except Exception as e:
             flash(f"Eroare la trimiterea mesajului: {e}", "danger")
