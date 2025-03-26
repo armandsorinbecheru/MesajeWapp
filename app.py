@@ -1,6 +1,8 @@
+# whatsapp_notifier/app.py
+
 import datetime
 import pywhatkit as kit
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, url_for
 import re
 import os
 
@@ -17,7 +19,6 @@ def index():
             flash("Introduceți numărul comenzii și numărul de telefon.", "danger")
             return redirect("/")
 
-        # Format Romanian phone numbers to +40
         phone_number = re.sub(r"\D", "", phone_number)
         if phone_number.startswith("0"):
             phone_number = "+40" + phone_number[1:]
@@ -32,19 +33,18 @@ def index():
             f"Program: Luni - Sâmbătă, 08:00 - 18:00"
         )
 
-        try:
-            now = datetime.datetime.now()
-            hour = now.hour
-            minute = now.minute + 1 if now.minute < 59 else 0
-            if now.minute == 59:
-                hour = (hour + 1) % 24
+        now = datetime.datetime.now()
+        target_time = now + datetime.timedelta(minutes=2)
+        hour = target_time.hour
+        minute = target_time.minute
 
-            kit.sendwhatmsg(phone_number, message, hour, minute, wait_time=10, tab_close=True)
-            flash("Mesaj WhatsApp programat cu succes!", "success")
+        try:
+            kit.sendwhatmsg(phone_number, message, hour, minute, wait_time=20, tab_close=True)
+            flash("Mesaj WhatsApp trimis cu succes!", "success")
         except Exception as e:
             flash(f"Eroare la trimiterea mesajului: {e}", "danger")
 
-        return redirect("/")
+        return redirect(url_for("index"))
 
     return render_template("index.html")
 
