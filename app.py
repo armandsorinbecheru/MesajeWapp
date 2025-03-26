@@ -17,7 +17,7 @@ def index():
             flash("Introduceți numărul comenzii și numărul de telefon.", "danger")
             return redirect("/")
 
-        # Format Romanian numbers to +40
+        # Format Romanian phone numbers to +40
         phone_number = re.sub(r"\D", "", phone_number)
         if phone_number.startswith("0"):
             phone_number = "+40" + phone_number[1:]
@@ -27,7 +27,7 @@ def index():
         print(f"[DEBUG] Formatted number: {phone_number}")
 
         message = (
-            f"*Curățătoria Xxxxxxx XxxXxx*\n\n"
+            f"*Curățătoria Xxxxxxx Xxxx*\n\n"
             f"Bună ziua! Comanda dvs. #{order_number} este gata de ridicare.\n"
             f"Program: Luni - Sâmbătă, 08:00 - 18:00"
         )
